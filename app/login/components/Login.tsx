@@ -62,8 +62,12 @@ export const Login = ({
     inviteToken = searchParams['inviteToken'];
   }
 
-  const protocol = host?.includes('localhost') ? 'http' : 'https';
-  const redirectUrl = `${protocol}://${host}/auth/callback`;
+  // Determine if the app is running locally or on Vercel
+  const isLocalhost = host?.includes('localhost');
+  const protocol = isLocalhost ? 'http' : 'https';
+  const redirectUrl = isLocalhost
+    ? `${protocol}://localhost:3000/auth/callback`
+    : `${protocol}://${host}/auth/callback`;
 
   console.log('redirect url = >>>', redirectUrl);
 
