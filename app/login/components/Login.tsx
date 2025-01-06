@@ -16,10 +16,8 @@ type Inputs = {
 };
 
 export const Login = ({
-  host,
   searchParams,
 }: {
-  host: string | null;
   searchParams?: { [key: string]: string | string[] | undefined };
 }) => {
   const supabase = createClientComponentClient<Database>();
@@ -62,12 +60,11 @@ export const Login = ({
     inviteToken = searchParams['inviteToken'];
   }
 
-  // Determine if the app is running locally or on Vercel
-  const isLocalhost = host?.includes('localhost');
-  const protocol = isLocalhost ? 'http' : 'https';
+  // Dynamically determine the redirect URL based on environment
+  const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
   const redirectUrl = isLocalhost
-    ? `${protocol}://localhost:3000/auth/callback`
-    : `${protocol}://${host}/auth/callback`;
+    ? `http://localhost:3000/auth/callback`
+    : `https://${process.env.NEXT_PUBLIC_VERCEL_URL || window.location.hostname}/auth/callback`;
 
   console.log('redirect url = >>>', redirectUrl);
 
@@ -105,15 +102,6 @@ export const Login = ({
         <div className='flex flex-col gap-4 bg-neutral-50 dark:bg-neutral-900 border border-neutral-200 p-4 rounded-xl max-w-sm w-full'>
           <h1 className='text-xl'>Welcome</h1>
           <p className='text-xs opacity-60'>Sign in or create an account to get started.</p>
-          {/* <Button
-            onClick={signInWithGoogle}
-            variant={"outline"}
-            className="font-semibold"
-          >
-            <AiOutlineGoogle size={20} />
-            Continue with Google
-          </Button>
-          <OR /> */}
 
           <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-2'>
             <div className='flex flex-col gap-4'>
