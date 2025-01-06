@@ -36,7 +36,7 @@ export const Login = ({
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsSubmitting(true);
     try {
-      await signInWithMagicLink();
+      await signInWithMagicLink(data.email);
       setTimeout(() => {
         setIsSubmitting(false);
         toast({
@@ -67,7 +67,7 @@ export const Login = ({
 
   console.log('redirect url = >>>', redirectUrl);
 
-  const signInWithMagicLink = async () => {
+  const signInWithGoogle = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: 'google',
       options: {
@@ -78,18 +78,18 @@ export const Login = ({
     console.log(data, error);
   };
 
-  // const signInWithMagicLink = async (email: string) => {
-  //   const { error } = await supabase.auth.signInWithOtp({
-  //     email,
-  //     options: {
-  //       emailRedirectTo: redirectUrl,
-  //     },
-  //   });
+  const signInWithMagicLink = async (email: string) => {
+    const { error } = await supabase.auth.signInWithOtp({
+      email,
+      options: {
+        emailRedirectTo: redirectUrl,
+      },
+    });
 
-  //   if (error) {
-  //     console.log(`Error: ${error.message}`);
-  //   }
-  // };
+    if (error) {
+      console.log(`Error: ${error.message}`);
+    }
+  };
 
   if (isMagicLinkSent) {
     return <WaitingForMagicLink toggleState={() => setIsMagicLinkSent(false)} />;
