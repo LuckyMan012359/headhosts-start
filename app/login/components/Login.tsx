@@ -36,7 +36,7 @@ export const Login = ({
   const onSubmit: SubmitHandler<Inputs> = async (data) => {
     setIsSubmitting(true);
     try {
-      await signInWithMagicLink(data.email);
+      await signInWithMagicLink();
       setTimeout(() => {
         setIsSubmitting(false);
         toast({
