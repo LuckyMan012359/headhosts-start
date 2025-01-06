@@ -22,8 +22,6 @@ export default async function LoginPage({
   }
 
   const headersList = headers();
-  console.log(headersList);
-
   const host = headersList.get('host');
 
   return (
