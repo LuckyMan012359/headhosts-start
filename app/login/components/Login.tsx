@@ -86,6 +86,8 @@ export const Login = ({
       },
     });
 
+    console.log(error);
+
     if (error) {
       console.log(`Error: ${error.message}`);
     }
