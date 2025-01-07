@@ -116,6 +116,13 @@ export default function TrainModelZone({ packSlug }: { packSlug: string }) {
       const blobUrls: string[] = [];
 
       if (files.length > 0) {
+        // const blob = await upload(files[0].name, files[0], {
+        //   access: 'public',
+        //   handleUploadUrl: '/astria/train-model/image-upload',
+        // });
+
+        // console.log(blob);
+
         for (const file of files) {
           try {
             const blob = await upload(file.name, file, {
