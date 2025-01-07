@@ -26,12 +26,15 @@ export async function POST(request: Request): Promise<NextResponse> {
         if (!user) {
           throw new Error('Unauthorized');
         }
+        console.log(user.id);
+
         return {
           allowedContentTypes: ['image/jpeg', 'image/png', 'image/gif'],
           tokenPayload: JSON.stringify({
-            userId: user.id, // Including the user ID in the token payload
+            // userId: user.id, // Including the user ID in the token payload
             // optional, sent to your server on upload completion
             // you could pass a user id from auth, or a value from clientPayload
+            // filename: pathname,
           }),
         };
       },
