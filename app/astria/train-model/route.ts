@@ -59,9 +59,11 @@ export async function POST(request: Request) {
       { status: 500 },
     );
   }
+
   let _credits = null;
 
   console.log({ stripeIsConfigured });
+
   if (stripeIsConfigured) {
     const { error: creditError, data: credits } = await supabase
       .from('credits')
@@ -72,7 +74,7 @@ export async function POST(request: Request) {
       console.error({ creditError });
       return NextResponse.json(
         {
-          message: 'Something went wrong!',
+          message: 'Something went wrong!1',
         },
         { status: 500 },
       );
@@ -89,7 +91,7 @@ export async function POST(request: Request) {
         console.error({ errorCreatingCredits });
         return NextResponse.json(
           {
-            message: 'Something went wrong!',
+            message: 'Something went wrong!2',
           },
           { status: 500 },
         );
@@ -124,11 +126,14 @@ export async function POST(request: Request) {
     .select('id')
     .single();
 
+  console.log(supabase);
+
+  console.log(modelError, data);
+
   if (modelError) {
-    console.error('modelError: ', modelError);
     return NextResponse.json(
       {
-        message: 'Something went wrong!',
+        message: 'Something went wrong!3',
       },
       { status: 500 },
     );
@@ -236,7 +241,7 @@ export async function POST(request: Request) {
       console.error('samplesError: ', samplesError);
       return NextResponse.json(
         {
-          message: 'Something went wrong!',
+          message: 'Something went wrong!4',
         },
         { status: 500 },
       );
@@ -257,7 +262,7 @@ export async function POST(request: Request) {
         console.error({ updateCreditError });
         return NextResponse.json(
           {
-            message: 'Something went wrong!',
+            message: 'Something went wrong!5',
           },
           { status: 500 },
         );
@@ -271,7 +276,7 @@ export async function POST(request: Request) {
     }
     return NextResponse.json(
       {
-        message: 'Something went wrong!',
+        message: 'Something went wrong!6',
       },
       { status: 500 },
     );
